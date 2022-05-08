@@ -6,6 +6,6 @@ const Header = () => {
       <h2>Weather</h2>
     </header>
   );
-}
+};
 
 export default Header;

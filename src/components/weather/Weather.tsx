@@ -6,6 +6,6 @@ const Weather = () => {
       <p>Weather component</p>
     </header>
   );
-}
+};
 
 export default Weather;
