@@ -1,9 +1,13 @@
 import React from 'react';
 
-const Header = () => {
+export interface HeaderProps {
+  cityName: string;
+}
+
+const Header: React.FC<HeaderProps> = ({ cityName }) => {
   return (
     <header>
-      <h2>Weather</h2>
+      <h2>Weather of {cityName}</h2>
     </header>
   );
 };
