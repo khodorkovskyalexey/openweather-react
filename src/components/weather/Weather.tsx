@@ -11,10 +11,10 @@ const Weather: React.FC<WeatherProps> = ({ temp, feelsLike, humidity, pressure }
   return (
     <header>
       <h3>Weather tooday</h3>
-      <p>Temperature: {temp}</p>
-      <p>Feels like: {feelsLike}</p>
-      <p>Humidity: {humidity}</p>
-      <p>Pressure: {pressure}</p>
+      <p>Temperature: {temp}°C</p>
+      <p>Feels like: {feelsLike}°C</p>
+      <p>Humidity: {humidity}%</p>
+      <p>Pressure: {pressure} hPa</p>
     </header>
   );
 };
