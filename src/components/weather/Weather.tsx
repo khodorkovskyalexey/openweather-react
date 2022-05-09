@@ -1,7 +1,7 @@
 import React from 'react';
 import './weather.css';
 
-export interface WeatherProps {
+interface WeatherProps {
   date: Date;
   temp: number;
   feelsLike: number;

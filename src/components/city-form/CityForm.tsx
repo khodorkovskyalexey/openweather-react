@@ -1,6 +1,6 @@
 import React from 'react';
 
-export interface CityFormProps {
+interface CityFormProps {
   weatherMethod: (e: React.ChangeEvent<HTMLFormElement>) => Promise<void>;
 }
 
