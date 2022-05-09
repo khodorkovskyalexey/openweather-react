@@ -1,6 +1,5 @@
 import React from 'react';
 
-import './App.css';
 import { CityForm, Header, Weather } from './components';
 import { WeatherByDay } from './types';
 
