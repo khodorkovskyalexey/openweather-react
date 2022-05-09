@@ -44,7 +44,7 @@ const App = () => {
     <div className="App">
       <Header cityName={city} />
       <CityForm weatherMethod={updateWeather} />
-      <Weather temp={temp} feelsLike={feelsLike} humidity={humidity} pressure={pressure} />
+      <Weather date={new Date()} temp={temp} feelsLike={feelsLike} humidity={humidity} pressure={pressure} />
     </div>
   );
 };

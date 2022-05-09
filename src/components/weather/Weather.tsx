@@ -1,21 +1,45 @@
 import React from 'react';
+import './weather.css';
 
 export interface WeatherProps {
+  date: Date;
   temp: number;
   feelsLike: number;
   humidity: number;
   pressure: number;
 }
 
-const Weather: React.FC<WeatherProps> = ({ temp, feelsLike, humidity, pressure }) => {
+function getViewDate(date: Date) {
+  const monthNames = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+  const day = date.getDate();
+  const month = date.getMonth();
+  return `${day} ${monthNames[month]}`;
+}
+
+const Weather: React.FC<WeatherProps> = ({ date, temp, feelsLike, humidity, pressure }) => {
   return (
-    <header>
-      <h3>Weather tooday</h3>
-      <p>Temperature: {temp}°C</p>
-      <p>Feels like: {feelsLike}°C</p>
-      <p>Humidity: {humidity}%</p>
-      <p>Pressure: {pressure} hPa</p>
-    </header>
+    <div>
+      <div className="weather-card">
+        <h3>{getViewDate(date)}</h3>
+        <p>Temperature: {temp}°C</p>
+        <p>Feels like: {feelsLike}°C</p>
+        <p>Humidity: {humidity}%</p>
+        <p>Pressure: {pressure} hPa</p>
+      </div>
+    </div>
   );
 };
 
