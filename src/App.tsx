@@ -21,7 +21,9 @@ const App = () => {
     const actualCity = inputCity ?? city;
     const openweatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${actualCity}&appid=${process.env.REACT_APP_OPENWEAHER_API_KEY}&units=metric`;
     const weather = await fetch(openweatherUrl).then((res) => res.json());
-    console.log(weather);
+    if (weather.cod == 404) { //weather.cod is string
+      throw new Error('Invalid city name');
+    }
     setTemp(weather.main.temp);
     setFeelsLike(weather.main.feels_like);
     setHumidity(weather.main.humidity);
@@ -34,7 +36,7 @@ const App = () => {
     if (!inputCity.trim().length) {
       inputCity = city;
     }
-    getCurrentWeather(inputCity);
+    await getCurrentWeather(inputCity);
     setCity(inputCity);
   }
 
