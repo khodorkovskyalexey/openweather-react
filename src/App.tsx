@@ -2,17 +2,12 @@ import React from 'react';
 
 import './App.css';
 import { CityForm, Header, Weather } from './components';
-import { WeatherType } from './types';
+import { WeatherByDay } from './types';
 
 class App extends React.Component {
   state = {
     city: 'Omsk',
-    currentWeather: {
-      temp: 0,
-      feelsLike: 0,
-      humidity: 0,
-      pressure: 0,
-    } as WeatherType,
+    currentWeather: new WeatherByDay(),
   };
 
   componentDidMount() {
