@@ -19,7 +19,7 @@ const App = () => {
 
   async function getCurrentWeather(inputCity?: string) {
     const actualCity = inputCity ?? city;
-    const openweatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${actualCity}&appid=${process.env.REACT_APP_OPENWEAHER_API_KEY}&units=metrix`;
+    const openweatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${actualCity}&appid=${process.env.REACT_APP_OPENWEAHER_API_KEY}&units=metric`;
     const weather = await fetch(openweatherUrl).then((res) => res.json());
     console.log(weather);
     setTemp(weather.main.temp);
