@@ -1,52 +1,69 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import './App.css';
 import { CityForm, Header, Weather } from './components';
+import { WeatherType } from './types';
 
-const App = () => {
-  const [city, setCity] = useState('Omsk');
-  const [temp, setTemp] = useState(0);
-  const [feelsLike, setFeelsLike] = useState(0);
-  const [humidity, setHumidity] = useState(0);
-  const [pressure, setPressure] = useState(0);
+class App extends React.Component {
+  state = {
+    city: 'Omsk',
+    currentWeather: {
+      temp: 0,
+      feelsLike: 0,
+      humidity: 0,
+      pressure: 0,
+    } as WeatherType,
+  };
 
-  useEffect(() => {
+  componentDidMount() {
     const fetchData = async () => {
-      getCurrentWeather();
+      this.getCurrentWeather();
     };
     fetchData();
-  }, []);
+  }
 
-  async function getCurrentWeather(inputCity?: string) {
-    const actualCity = inputCity ?? city;
+  getCurrentWeather = async (inputCity?: string) => {
+    const actualCity = inputCity ?? this.state.city;
     const openweatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${actualCity}&appid=${process.env.REACT_APP_OPENWEAHER_API_KEY}&units=metric`;
     const weather = await fetch(openweatherUrl).then((res) => res.json());
     if (weather.cod === '404') {
       throw new Error('Invalid city name');
     }
-    setTemp(weather.main.temp);
-    setFeelsLike(weather.main.feels_like);
-    setHumidity(weather.main.humidity);
-    setPressure(weather.main.pressure);
-  }
+    this.setState({
+      currentWeather: {
+        temp: weather.main.temp,
+        feelsLike: weather.main.feels_like,
+        humidity: weather.main.humidity,
+        pressure: weather.main.pressure,
+      },
+    });
+  };
 
-  async function updateWeather(e: React.ChangeEvent<HTMLFormElement>) {
+  updateWeather = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     let inputCity = e.target.city.value;
     if (!inputCity.trim().length) {
-      inputCity = city;
+      inputCity = this.state.city;
     }
-    await getCurrentWeather(inputCity);
-    setCity(inputCity);
-  }
+    await this.getCurrentWeather(inputCity);
+    this.setState({ city: inputCity });
+  };
 
-  return (
-    <div className="App">
-      <Header cityName={city} />
-      <CityForm weatherMethod={updateWeather} />
-      <Weather date={new Date()} temp={temp} feelsLike={feelsLike} humidity={humidity} pressure={pressure} />
-    </div>
-  );
-};
+  render() {
+    return (
+      <div className="App">
+        <Header cityName={this.state.city} />
+        <CityForm weatherMethod={this.updateWeather} />
+        <Weather
+          date={new Date()}
+          temp={this.state.currentWeather.temp}
+          feelsLike={this.state.currentWeather.feelsLike}
+          humidity={this.state.currentWeather.humidity}
+          pressure={this.state.currentWeather.pressure}
+        />
+      </div>
+    );
+  }
+}
 
 export default App;
