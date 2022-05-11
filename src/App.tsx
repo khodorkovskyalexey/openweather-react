@@ -8,15 +8,18 @@ const App: React.FC = () => {
   const [currentWeather, setCurrentWeather] = useState<WeatherByDay>(new WeatherByDay());
 
   useEffect(() => {
-    const fetchData = async () => {
-      await getCurrentWeather();
-    };
-    fetchData();
+    getCurrentWeather();
   }, []);
 
+  const updateCityAndWeather = (inputCity: string) => {
+    setCity(inputCity);
+    getCurrentWeather(inputCity);
+  };
+
   const getCurrentWeather = async (inputCity?: string) => {
-    const actualCity = inputCity ?? city;
-    const openweatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${actualCity}&appid=${process.env.REACT_APP_OPENWEAHER_API_KEY}&units=metric`;
+    const openweatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${inputCity ?? city}&appid=${
+      process.env.REACT_APP_OPENWEAHER_API_KEY
+    }&units=metric`;
     const weather = await fetch(openweatherUrl).then((res) => res.json());
     if (weather.cod === '404') {
       throw new Error('Invalid city name');
@@ -29,20 +32,10 @@ const App: React.FC = () => {
     });
   };
 
-  const updateWeather = async (e: React.ChangeEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    let inputCity = e.target.city.value;
-    if (!inputCity.trim().length) {
-      inputCity = city;
-    }
-    await getCurrentWeather(inputCity);
-    setCity(inputCity);
-  };
-
   return (
     <div className="App">
       <Header cityName={city} />
-      <CityForm weatherMethod={updateWeather} />
+      <CityForm city={city} setCity={updateCityAndWeather} />
       <Weather
         date={new Date()}
         temp={currentWeather.temp}
