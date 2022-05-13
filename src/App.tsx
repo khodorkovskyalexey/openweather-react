@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { getCurrentWeather } from './api';
 
 import { CityForm, Header, Weather } from './components';
 import { WeatherByDay } from './types';
@@ -15,28 +16,17 @@ const App: React.FC = () => {
   const [currentWeather, setCurrentWeather] = useState<WeatherByDay>(initWeather);
 
   useEffect(() => {
-    getCurrentWeather();
+    fetchCurrentWeather();
   }, []);
 
   const updateCityAndWeather = (inputCity: string) => {
     setCity(inputCity);
-    getCurrentWeather(inputCity);
+    fetchCurrentWeather(inputCity);
   };
 
-  const getCurrentWeather = async (inputCity?: string) => {
-    const openweatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${inputCity ?? city}&appid=${
-      process.env.REACT_APP_OPENWEAHER_API_KEY
-    }&units=metric`;
-    const weather = await fetch(openweatherUrl).then((res) => res.json());
-    if (weather.cod === '404') {
-      throw new Error('Invalid city name');
-    }
-    setCurrentWeather({
-      temp: weather.main.temp,
-      feelsLike: weather.main.feels_like,
-      humidity: weather.main.humidity,
-      pressure: weather.main.pressure,
-    });
+  const fetchCurrentWeather = async (inputCity?: string) => {
+    const weather = await getCurrentWeather(inputCity ?? city);
+    setCurrentWeather(weather);
   };
 
   return (
