@@ -4,8 +4,15 @@ import { CityForm, Header, Weather } from './components';
 import { WeatherByDay } from './types';
 
 const App: React.FC = () => {
+  const initWeather: WeatherByDay = {
+    feelsLike: 0,
+    humidity: 0,
+    pressure: 0,
+    temp: 0,
+  };
+
   const [city, setCity] = useState('Omsk');
-  const [currentWeather, setCurrentWeather] = useState<WeatherByDay>(new WeatherByDay());
+  const [currentWeather, setCurrentWeather] = useState<WeatherByDay>(initWeather);
 
   useEffect(() => {
     getCurrentWeather();
