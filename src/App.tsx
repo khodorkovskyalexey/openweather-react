@@ -37,7 +37,6 @@ const App: React.FC = () => {
       <Header cityName={city} />
       <CityForm city={city} setCity={updateCityAndWeather} />
       <Weather
-        date={new Date()}
         temp={currentWeather.temp}
         feelsLike={currentWeather.feelsLike}
         humidity={currentWeather.humidity}
