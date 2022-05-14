@@ -31,12 +31,7 @@ const App: React.FC = () => {
     <div className="App">
       <Header cityName={city} />
       <CityForm city={city} setCity={fetchCurrentWeather} />
-      <WeatherCard
-        temp={currentWeather.temp}
-        feelsLike={currentWeather.feelsLike}
-        humidity={currentWeather.humidity}
-        pressure={currentWeather.pressure}
-      />
+      <WeatherCard weather={currentWeather} />
     </div>
   );
 };

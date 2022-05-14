@@ -1,15 +1,15 @@
 import React from 'react';
+import { Weather } from '../../types';
 import { getDateInCustomFormat } from '../../utils';
 import './weather-card.css';
 
 interface WeatherCardProps {
-  temp: number;
-  feelsLike: number;
-  humidity: number;
-  pressure: number;
+  weather: Weather;
 }
 
-const WeatherCard: React.FC<WeatherCardProps> = ({ temp, feelsLike, humidity, pressure }) => {
+const WeatherCard: React.FC<WeatherCardProps> = ({ weather }) => {
+  const { temp, feelsLike, humidity, pressure } = weather;
+
   return (
     <div>
       <div className="weather-card">
