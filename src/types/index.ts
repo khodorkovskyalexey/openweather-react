@@ -1,4 +1,4 @@
-export type WeatherByDay = {
+export type Weather = {
   temp: number;
   feelsLike: number;
   humidity: number;

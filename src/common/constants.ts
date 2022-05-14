@@ -1,8 +1,8 @@
-import { WeatherByDay } from '../types';
+import { Weather } from '../types';
 
 export const defaultCity: string = 'Omsk';
 
-export const defaultWeather: WeatherByDay = {
+export const defaultWeather: Weather = {
   feelsLike: 0,
   humidity: 0,
   pressure: 0,

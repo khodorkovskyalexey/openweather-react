@@ -1,6 +1,6 @@
-import { WeatherByDay } from '../types';
+import { Weather } from '../types';
 
-export async function getCurrentWeather(city: string): Promise<WeatherByDay> {
+export async function getCurrentWeather(city: string): Promise<Weather> {
   const openweatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.REACT_APP_OPENWEAHER_API_KEY}&units=metric`;
   const weather = await fetch(openweatherUrl).then((res) => res.json());
   if (weather.cod === '404') {
@@ -12,5 +12,5 @@ export async function getCurrentWeather(city: string): Promise<WeatherByDay> {
     feelsLike: weather.main.feels_like,
     humidity: weather.main.humidity,
     pressure: weather.main.pressure,
-  } as WeatherByDay;
+  } as Weather;
 }
