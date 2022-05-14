@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { getCurrentWeather } from './api';
+import { getWeather } from './api';
 import { defaultCity, defaultWeather } from './common/constants';
 
 import { CityForm, Header, WeatherCard } from './components';
@@ -22,8 +22,8 @@ const App: React.FC = () => {
     if (inputCity) {
       setCity(inputCity);
     }
-    const weather = await getCurrentWeather(inputCity ?? city);
-    setCurrentWeather(weather);
+    const weather = await getWeather(inputCity ?? city);
+    setCurrentWeather(weather.currentWeather);
     updateLastFetchDate();
   };
 

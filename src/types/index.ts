@@ -4,3 +4,8 @@ export type Weather = {
   humidity: number;
   pressure: number;
 };
+
+export type WeeklyWeather = {
+  currentWeather: Weather;
+  forecastWeather: [Weather & { date: Date }];
+};
