@@ -1,30 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { getCurrentWeather } from './api';
+import { defaultCity, defaultWeather } from './common/constants';
 
 import { CityForm, Header, Weather } from './components';
-import { WeatherByDay } from './types';
+import { useLocalStorage } from './hooks';
 
 const App: React.FC = () => {
-  const initWeather: WeatherByDay = {
-    feelsLike: 0,
-    humidity: 0,
-    pressure: 0,
-    temp: 0,
-  };
-
-  const [city, setCity] = useState('Omsk');
-  const [currentWeather, setCurrentWeather] = useState<WeatherByDay>(initWeather);
+  const [city, setCity] = useLocalStorage('city', defaultCity);
+  const [currentWeather, setCurrentWeather] = useLocalStorage('currentWeather', defaultWeather);
 
   useEffect(() => {
     fetchCurrentWeather();
   }, []);
 
-  const updateCityAndWeather = (inputCity: string) => {
-    setCity(inputCity);
-    fetchCurrentWeather(inputCity);
-  };
-
   const fetchCurrentWeather = async (inputCity?: string) => {
+    if (inputCity) {
+      setCity(inputCity);
+    }
     const weather = await getCurrentWeather(inputCity ?? city);
     setCurrentWeather(weather);
   };
@@ -32,7 +24,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <Header cityName={city} />
-      <CityForm city={city} setCity={updateCityAndWeather} />
+      <CityForm city={city} setCity={fetchCurrentWeather} />
       <Weather
         temp={currentWeather.temp}
         feelsLike={currentWeather.feelsLike}
