@@ -1,1 +1,1 @@
-export { getCurrentWeather } from './current-weather.api';
+export { getCurrentWeather } from './current-weather';
