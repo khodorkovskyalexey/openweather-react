@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { getCurrentWeather } from './api';
 import { defaultCity, defaultWeather } from './common/constants';
 
-import { CityForm, Header, Weather } from './components';
+import { CityForm, Header, WeatherCard } from './components';
 import { useLocalStorage } from './hooks';
 import { getLastFetchDate, updateLastFetchDate } from './store';
 import { isDateToday } from './utils';
@@ -31,7 +31,7 @@ const App: React.FC = () => {
     <div className="App">
       <Header cityName={city} />
       <CityForm city={city} setCity={fetchCurrentWeather} />
-      <Weather
+      <WeatherCard
         temp={currentWeather.temp}
         feelsLike={currentWeather.feelsLike}
         humidity={currentWeather.humidity}

@@ -1,15 +1,15 @@
 import React from 'react';
 import { getDateInCustomFormat } from '../../utils';
-import './weather.css';
+import './weather-card.css';
 
-interface WeatherProps {
+interface WeatherCardProps {
   temp: number;
   feelsLike: number;
   humidity: number;
   pressure: number;
 }
 
-const Weather: React.FC<WeatherProps> = ({ temp, feelsLike, humidity, pressure }) => {
+const WeatherCard: React.FC<WeatherCardProps> = ({ temp, feelsLike, humidity, pressure }) => {
   return (
     <div>
       <div className="weather-card">
@@ -23,4 +23,4 @@ const Weather: React.FC<WeatherProps> = ({ temp, feelsLike, humidity, pressure }
   );
 };
 
-export default Weather;
+export default WeatherCard;
