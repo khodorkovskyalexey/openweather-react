@@ -29,7 +29,7 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      <Header cityName={city} />
+      <Header cityName={city} updateWeather={fetchCurrentWeather} />
       <CityForm city={city} setCity={fetchCurrentWeather} />
       <WeatherCard weather={currentWeather} />
     </div>
