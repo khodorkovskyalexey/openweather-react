@@ -1,4 +1,5 @@
 import { WeeklyWeather } from '../types';
+import { nextFiveDaysFilter } from '../utils';
 
 type FetchedCord = {
   lat: number;
@@ -41,7 +42,13 @@ export async function getWeather(city: string): Promise<WeeklyWeather> {
       humidity: weather.current.humidity,
       pressure: weather.current.pressure,
     },
-    forecastWeather: weather.daily.map((weather: any) => ({
+    forecastWeather: nextFiveDaysFilter(
+      weather.daily.map((weather) => {
+        weather.dt = weather.dt * 1000; // время приходит в неактуальном формате, не хватает двух нулей
+        return weather;
+      }),
+      'dt',
+    ).map((weather: FetchedWeather['daily'][0]) => ({
       date: new Date(weather.dt),
       feelsLike: weather.feels_like.day,
       humidity: weather.humidity,

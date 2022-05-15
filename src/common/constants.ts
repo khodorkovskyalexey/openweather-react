@@ -1,4 +1,4 @@
-import { Weather } from '../types';
+import { ForecastWeather, Weather } from '../types';
 
 export const defaultCity: string = 'Omsk';
 
@@ -8,3 +8,10 @@ export const defaultWeather: Weather = {
   pressure: 0,
   temp: 0,
 };
+
+export const defaultForecastWeather: ForecastWeather = [
+  {
+    ...defaultWeather,
+    date: new Date(0),
+  },
+];

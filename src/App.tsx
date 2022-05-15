@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { getWeather } from './api';
-import { defaultCity, defaultWeather } from './common/constants';
+import { defaultCity, defaultForecastWeather, defaultWeather } from './common/constants';
 
 import { CityForm, Header, WeatherCard } from './components';
 import { useLocalStorage } from './hooks';
@@ -10,6 +10,7 @@ import { isDateToday } from './utils';
 const App: React.FC = () => {
   const [city, setCity] = useLocalStorage('city', defaultCity);
   const [currentWeather, setCurrentWeather] = useLocalStorage('currentWeather', defaultWeather);
+  const [forecastWeather, setForecastWeather] = useLocalStorage('forecastWeather', defaultForecastWeather);
 
   useEffect(() => {
     const lastFetchDate = getLastFetchDate();
@@ -24,6 +25,7 @@ const App: React.FC = () => {
     }
     const weather = await getWeather(inputCity ?? city);
     setCurrentWeather(weather.currentWeather);
+    setForecastWeather(weather.forecastWeather);
     updateLastFetchDate();
   };
 
