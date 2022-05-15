@@ -1,10 +1,7 @@
-import { WeeklyWeather } from '../types';
+import { defaultCoordinates } from '../common/constants';
+import { getCity, getCoordinates, setCoordinates } from '../store';
+import { Coordinates, WeeklyWeather } from '../types';
 import { nextFiveDaysFilter } from '../utils';
-
-type FetchedCord = {
-  lat: number;
-  lon: number;
-};
 
 type FetchedWeather = {
   current: {
@@ -29,8 +26,18 @@ type FetchedWeather = {
 };
 
 export async function getWeather(city: string): Promise<WeeklyWeather> {
-  const cordsUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${process.env.REACT_APP_OPENWEAHER_API_KEY}`;
-  const { lat, lon } = (await fetch(cordsUrl).then((res) => res.json()))[0] as FetchedCord;
+  let { lat, lon } = defaultCoordinates;
+  const coordinates = getCoordinates();
+  if (getCity() === city && coordinates) {
+    lat = coordinates.lat;
+    lon = coordinates.lon;
+  } else {
+    const cordsUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${process.env.REACT_APP_OPENWEAHER_API_KEY}`;
+    const fecthCoordinates = (await fetch(cordsUrl).then((res) => res.json()))[0] as Coordinates;
+    lat = fecthCoordinates.lat;
+    lon = fecthCoordinates.lon;
+    setCoordinates({ lat, lon });
+  }
 
   const openweatherUrl = `https://api.openweathermap.org/data/2.5/onecall?exclude=minutely,hourly,alerts&lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_OPENWEAHER_API_KEY}&units=metric&lang=ru`;
   const weather = (await fetch(openweatherUrl).then((res) => res.json())) as FetchedWeather;

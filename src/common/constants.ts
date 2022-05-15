@@ -1,6 +1,11 @@
-import { ForecastWeather, Weather } from '../types';
+import { Coordinates, ForecastWeather, Weather } from '../types';
 
 export const defaultCity: string = 'Omsk';
+
+export const defaultCoordinates: Coordinates = {
+  lat: 54.991375,
+  lon: 73.371529,
+};
 
 export const defaultWeather: Weather = {
   feelsLike: 0,

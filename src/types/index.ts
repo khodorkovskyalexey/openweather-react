@@ -11,3 +11,8 @@ export type WeeklyWeather = {
   currentWeather: Weather;
   forecastWeather: ForecastWeather;
 };
+
+export type Coordinates = {
+  lat: number;
+  lon: number;
+};
