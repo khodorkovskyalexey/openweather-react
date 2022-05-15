@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { getWeather } from './api';
 import { defaultCity, defaultForecastWeather, defaultWeather } from './common/constants';
 
-import { CityForm, Header, WeatherCard } from './components';
+import { CityForm, Header, WeatherCard, WeatherGroup } from './components';
 import { useLocalStorage } from './hooks';
 import { getLastFetchDate, updateLastFetchDate } from './store';
 import { isDateToday } from './utils';
@@ -33,7 +33,14 @@ const App: React.FC = () => {
     <div className="App">
       <Header cityName={city} updateWeather={fetchCurrentWeather} />
       <CityForm city={city} setCity={fetchCurrentWeather} />
-      <WeatherCard weather={currentWeather} />
+      <WeatherGroup>
+        <WeatherCard weather={currentWeather} />
+      </WeatherGroup>
+      <WeatherGroup>
+        {forecastWeather.map((weather, index) => (
+          <WeatherCard weather={weather} date={weather.date} key={index} />
+        ))}
+      </WeatherGroup>
     </div>
   );
 };

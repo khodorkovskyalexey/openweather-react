@@ -1,4 +1,9 @@
+import { stringDateParser } from './string-date-parser';
+
 export function getDateInCustomFormat(date: Date) {
+  if (typeof date === 'string') {
+    date = stringDateParser(date);
+  }
   const monthNames = [
     'January',
     'February',

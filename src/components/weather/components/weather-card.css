@@ -6,4 +6,6 @@
   padding-left: 1rem;
   padding-right: 1rem;
   width: max-content;
+  display: inline-block;
+  margin-right: 1rem;
 }
