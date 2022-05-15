@@ -51,7 +51,7 @@ export async function getWeather(city: string): Promise<WeeklyWeather> {
     },
     forecastWeather: nextFiveDaysFilter(
       weather.daily.map((weather) => {
-        weather.dt = weather.dt * 1000; // время приходит в неактуальном формате, не хватает двух нулей
+        weather.dt = weather.dt * 1000; // приходит время 1970 года, если добавить три нуля, то получится актуальное
         return weather;
       }),
       'dt',
