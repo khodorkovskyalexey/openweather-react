@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import { getCurrentWeather } from './api';
+import { defaultCity, defaultWeather } from './common/constants';
 
-function App() {
+import { CityForm, Header, WeatherCard } from './components';
+import { useLocalStorage } from './hooks';
+import { getLastFetchDate, updateLastFetchDate } from './store';
+import { isDateToday } from './utils';
+
+const App: React.FC = () => {
+  const [city, setCity] = useLocalStorage('city', defaultCity);
+  const [currentWeather, setCurrentWeather] = useLocalStorage('currentWeather', defaultWeather);
+
+  useEffect(() => {
+    const lastFetchDate = getLastFetchDate();
+    if (!isDateToday(lastFetchDate)) {
+      fetchCurrentWeather();
+    }
+  }, []);
+
+  const fetchCurrentWeather = async (inputCity?: string) => {
+    if (inputCity) {
+      setCity(inputCity);
+    }
+    const weather = await getCurrentWeather(inputCity ?? city);
+    setCurrentWeather(weather);
+    updateLastFetchDate();
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header cityName={city} updateWeather={fetchCurrentWeather} />
+      <CityForm city={city} setCity={fetchCurrentWeather} />
+      <WeatherCard weather={currentWeather} />
     </div>
   );
-}
+};
 
 export default App;
