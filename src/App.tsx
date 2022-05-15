@@ -4,13 +4,16 @@ import { defaultCity, defaultForecastWeather, defaultWeather } from './common/co
 
 import { CityForm, Header, WeatherCard, WeatherGroup } from './components';
 import { useLocalStorage } from './hooks';
-import { getLastFetchDate, updateLastFetchDate } from './store';
+import { getLastFetchDate, LocalStorageKeys, updateLastFetchDate } from './store';
 import { isDateToday } from './utils';
 
 const App: React.FC = () => {
-  const [city, setCity] = useLocalStorage('city', defaultCity);
-  const [currentWeather, setCurrentWeather] = useLocalStorage('currentWeather', defaultWeather);
-  const [forecastWeather, setForecastWeather] = useLocalStorage('forecastWeather', defaultForecastWeather);
+  const [city, setCity] = useLocalStorage(LocalStorageKeys.CITY, defaultCity);
+  const [currentWeather, setCurrentWeather] = useLocalStorage(LocalStorageKeys.CURRENT_WEATHER, defaultWeather);
+  const [forecastWeather, setForecastWeather] = useLocalStorage(
+    LocalStorageKeys.FORECAST_WEATHER,
+    defaultForecastWeather,
+  );
 
   useEffect(() => {
     const lastFetchDate = getLastFetchDate();
